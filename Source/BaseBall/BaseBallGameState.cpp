@@ -1,4 +1,6 @@
 #include "BaseBallGameState.h"
+#include "BaseBallPlayerController.h"
+#include "ChatWidget.h"
 
 ABaseBallGameState::ABaseBallGameState()
 {
@@ -39,4 +41,27 @@ void ABaseBallGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(ABaseBallGameState, CurrentPlayerIndex);
 	DOREPLIFETIME(ABaseBallGameState, GameResult);
 	DOREPLIFETIME(ABaseBallGameState, CurrentStrikes);
+}
+
+void ABaseBallGameState::Multi_UpdateMessage_Implementation(const FString& Message)
+{
+	UE_LOG(LogTemp, Log, TEXT("Multi_UpdateMessage called with: %s"), *Message);
+
+	for (FConstPlayerControllerIterator I = GetWorld()->GetPlayerControllerIterator(); I; ++I)
+	{
+		ABaseBallPlayerController* PC = Cast<ABaseBallPlayerController>(I->Get());
+		if (PC && PC->ChatWidget)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Updating chat for player: %s"), *PC->GetName());
+			UChatWidget* ChatW = Cast<UChatWidget>(PC->ChatWidget);
+			if (ChatW)
+			{
+				ChatW->AddChatMessage(Message);
+			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("ChatWidget is null for player: %s"), *PC->GetName());
+			}
+		}
+	}
 }

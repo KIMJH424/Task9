@@ -22,13 +22,14 @@ void ABaseBallPlayerController::BeginPlay()
 
 	if (IsLocalController() && ChatWidgetClass)
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("%s: ChatWidget created successfully."), *GetName());
+		UE_LOG(LogTemp, Warning, TEXT("%s: ChatWidget created successfully."), *GetName());
 
 		ChatWidget = CreateWidget<UUserWidget>(this, ChatWidgetClass);
 		if (ChatWidget)
 		{
 			UE_LOG(LogTemp, Warning, TEXT("%s: ChatWidget created successfully."), *GetName());
 			ChatWidget->AddToViewport();
+
 		}
 		else
 		{

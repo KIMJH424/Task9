@@ -19,8 +19,5 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "GameMode")
 	void ProcessChatMessage(const FString& Message, APlayerController* Sender);
-
-	UFUNCTION(NetMultiCast, Reliable)
-	void Multi_UpdateMessage(const FString& Message);
 	
 };

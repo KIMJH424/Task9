@@ -31,5 +31,9 @@ public:
 	UPROPERTY(Replicated, BlueprintReadOnly, Category = "GameState")
 	TArray<int32> CurrentStrikes;
 
+	UFUNCTION(NetMultiCast, Reliable)
+	void Multi_UpdateMessage(const FString& Message);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
 };

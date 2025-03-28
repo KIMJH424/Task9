@@ -30,15 +30,36 @@ void UBaseBallLib::Referee(const TArray<int32>& ServerNum,
 		return;
 	}
 
+	TArray<bool> bServerMatch;
+	bServerMatch.Init(false, ServerNum.Num());
+	TArray<bool> bPlayerMatch;
+	bPlayerMatch.Init(false, PlayerNum.Num());
+
 	for (int32 i = 0; i < 3; i++)
 	{ 
 		if (PlayerNum[i] == ServerNum[i])
 		{
 			Strike++;
+			bServerMatch[i] = true;
+			bPlayerMatch[i] = true;
 		}
-		else if (ServerNum.Contains(PlayerNum[i]))
+	}
+
+	for (int32 i = 0; i < 3; i++)
+	{
+		if (bPlayerMatch[i])
 		{
-			Ball++;
+			continue; 
+		}
+
+		for (int32 j = 0; j < 3; j++)
+		{
+			if (!bServerMatch[j] && PlayerNum[i] == ServerNum[j])
+			{
+				Ball++;
+				bServerMatch[j] = true; 
+				break;
+			}
 		}
 	}
 

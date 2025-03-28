@@ -4,6 +4,7 @@
 #include "BaseBallPlayerController.h"
 #include "ChatWidget.h"
 
+
 ABaseBallGameMode::ABaseBallGameMode()
 {
 	// GameStateClass = ABaseBallGameState::StaticClass();
@@ -139,34 +140,12 @@ void ABaseBallGameMode::ProcessChatMessage(const FString& Message, APlayerContro
 			break;
 		}
 		UE_LOG(LogTemp, Log, TEXT("Game Over: %s"), *FinalResult);
-		Multi_UpdateMessage(FinalResult);
+		GS->Multi_UpdateMessage(FinalResult);
 	}
 	else
 	{
-		Multi_UpdateMessage(ResultStr);
+		GS->Multi_UpdateMessage(ResultStr);
 	}
 }
 
 
-void ABaseBallGameMode::Multi_UpdateMessage_Implementation(const FString& Message)
-{
-	UE_LOG(LogTemp, Log, TEXT("Multi_UpdateMessage called with: %s"), *Message);
-
-	for (FConstPlayerControllerIterator I = GetWorld()->GetPlayerControllerIterator(); I; ++I)
-	{
-		ABaseBallPlayerController* PC = Cast<ABaseBallPlayerController>(I->Get());
-		if (PC && PC->ChatWidget)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Updating chat for player: %s"), *PC->GetName());
-			UChatWidget* ChatW = Cast<UChatWidget>(PC->ChatWidget);
-			if (ChatW)
-			{
-				ChatW->AddChatMessage(Message);
-			}
-			else
-			{
-				UE_LOG(LogTemp, Warning, TEXT("ChatWidget is null for player: %s"), *PC->GetName());
-			}
-		}
-	}
-}
