@@ -1,4 +1,5 @@
 전체 틀
+
 BaseBallLib
 - EGameResult : 게임 결과 상태 
 - EPlayerTurn : 현재 턴 상태
