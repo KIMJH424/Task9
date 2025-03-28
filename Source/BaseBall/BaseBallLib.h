@@ -20,18 +20,6 @@ enum class EPlayerTurn : uint8
 	Guest UMETA(DisplayName= "Guest")
 };
 
-USTRUCT(BlueprintType)
-struct FPlayerNumberList
-{
-	GENERATED_BODY()
-
-public:
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameState")
-	TArray<int32> Numbers;
-
-};
-
 UCLASS()
 class BASEBALL_API UBaseBallLib : public UBlueprintFunctionLibrary
 {
